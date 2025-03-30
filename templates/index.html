@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>File Upload with Folder Creation</title>
+  </head>
+  <body>
+    <h1>Upload Files and Create Folders</h1>
+
+    <!-- Folder Creation Form -->
+    <form action="/create-folder" method="post">
+      <label for="folder_name">Create Folder:</label>
+      <input type="text" id="folder_name" name="folder_name" required />
+      <button type="submit">Create Folder</button>
+    </form>
+
+    <!-- Message display -->
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+
+    <!-- File Upload Form -->
+    <form action="/upload-files" enctype="multipart/form-data" method="post">
+      <label for="folder_name">Upload to Folder:</label>
+      <select id="folder_name" name="folder_name" required>
+        <option value="" disabled selected>Select a folder</option>
+        {% for folder in folders %}
+        <option value="{{ folder }}">{{ folder }}</option>
+        {% endfor %}
+      </select>
+
+      <input type="file" name="files" multiple />
+      <button type="submit">Upload Files</button>
+    </form>
+
+    {% if show %}
+    <h2>Uploaded Files:</h2>
+    <ul>
+      {% for file in show %}
+      <li>
+        <img src="{{ '/db_data/' + folder_name + '/' + file }}" alt="{{ file }}" style="max-width: 200px; max-height: 200px;" />
+        {{ file }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+  </body>
+</html>
